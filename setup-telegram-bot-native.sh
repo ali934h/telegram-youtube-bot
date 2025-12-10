@@ -33,22 +33,20 @@
 #    - At least 1GB RAM (500MB for bot, 500MB for downloads)                  #
 #                                                                              #
 #  Installation:                                                               #
-#    1. Create script file:                                                    #
-#       nano setup-telegram-bot-native.sh                                     #
-#       (paste this content and save)                                         #
+#    One-line install (recommended):                                           #
+#       curl -fsSL https://raw.githubusercontent.com/ali934h/telegram-youtube-bot/main/setup-telegram-bot-native.sh | sudo bash
 #                                                                              #
-#    2. Make executable:                                                       #
-#       chmod +x setup-telegram-bot-native.sh                                 #
+#    Or manual installation:                                                   #
+#       1. Download: curl -O https://raw.githubusercontent.com/ali934h/telegram-youtube-bot/main/setup-telegram-bot-native.sh
+#       2. Make executable: chmod +x setup-telegram-bot-native.sh             #
+#       3. Run: sudo bash setup-telegram-bot-native.sh                        #
 #                                                                              #
-#    3. Run as root:                                                           #
-#       sudo bash setup-telegram-bot-native.sh                                #
-#                                                                              #
-#    4. Follow the prompts:                                                    #
+#    Follow the prompts:                                                       #
 #       - Enter your Telegram bot token                                       #
 #       - Enter authorized user IDs (comma-separated) or leave empty          #
 #       - Confirm server IP address                                           #
 #                                                                              #
-#    5. Wait for installation (2-3 minutes)                                    #
+#    Installation typically takes 2-3 minutes.                                 #
 #                                                                              #
 #  File Locations After Installation:                                          #
 #    - Bot code: /opt/telegram-yt-bot/bot.py                                  #
@@ -193,7 +191,7 @@
 #    - Nginx: https://nginx.org/en/docs/                                      #
 #    - Systemd: https://www.freedesktop.org/software/systemd/man/            #
 #                                                                              #
-#  Version: 2.0 (Native - No Docker)                                          #
+#  Version: 2.1 (Native - No Docker)                                          #
 #  Last Updated: December 2025                                                #
 #                                                                              #
 ################################################################################
@@ -220,7 +218,7 @@ fi
 # Get Telegram bot token
 echo -e "${YELLOW}📱 Enter your Telegram bot token:${NC}"
 echo -e "${YELLOW}   (Get it from @BotFather using /newbot command)${NC}"
-read -p "Token: " TELEGRAM_TOKEN
+read -p "Token: " TELEGRAM_TOKEN < /dev/tty
 
 if [ -z "$TELEGRAM_TOKEN" ]; then
     echo -e "${RED}❌ Token cannot be empty!${NC}"
@@ -233,7 +231,7 @@ echo -e "${YELLOW}👥 Enter authorized Telegram User IDs (comma-separated):${NC
 echo -e "${YELLOW}   Example: 123456789,987654321${NC}"
 echo -e "${YELLOW}   To find your User ID, message @userinfobot${NC}"
 echo -e "${YELLOW}   Leave empty to allow everyone (not recommended)${NC}"
-read -p "User IDs: " USER_IDS_INPUT
+read -p "User IDs: " USER_IDS_INPUT < /dev/tty
 
 # Process user IDs
 if [ -z "$USER_IDS_INPUT" ]; then
@@ -259,7 +257,7 @@ echo -e "${YELLOW}🌐 Detecting public server IP...${NC}"
 SERVER_IP=$(curl -s ifconfig.me)
 echo -e "${GREEN}✅ Your server IP: $SERVER_IP${NC}"
 echo ""
-read -p "Press Enter to confirm or type new IP address: " NEW_IP
+read -p "Press Enter to confirm or type new IP address: " NEW_IP < /dev/tty
 
 if [ ! -z "$NEW_IP" ]; then
     SERVER_IP=$NEW_IP
